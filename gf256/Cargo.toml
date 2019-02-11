@@ -1,0 +1,5 @@
+[package]
+name = "gf256"
+version = "0.1.0"
+authors = ["Dylan MacKenzie <ecstaticmorse@gmail.com>"]
+edition = "2018"

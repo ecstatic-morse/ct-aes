@@ -1,0 +1,26 @@
+[workspace]
+members = [
+    "gf256"
+]
+
+[package]
+name = "ct-aes"
+version = "0.1.0"
+authors = ["Dylan MacKenzie <ecstaticmorse@gmail.com>"]
+edition = "2018"
+build = "build.rs"
+
+[build-dependencies]
+gf256 = { path = "./gf256" }
+
+[dependencies]
+cfg-if = "0.1.6"
+gf256 = { path = "./gf256" }
+static_assertions = "0.3.1"
+timing-shield = "0.1.2"
+num-traits = "0.2.6"
+try_from = "0.3.2"
+
+[dev-dependencies]
+rand = "0.6.1"
+openssl = "0.10.16"
