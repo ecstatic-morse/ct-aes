@@ -3,7 +3,7 @@
 # Timing-attack Resistant AES Encryption
 
 This crate implements the AES block cipher using methods which are resistant to
-timing attacks. The fastest, non-parallel, software algorithm uses a 4kB lookup
+timing attacks. The fastest, non-parallel software algorithm uses a 4kB lookup
 table which is vulnerable to [cache-based side-channel attacks][t-table]. In
 practice, this is not a major security vulnerability since most widely-used
 platforms use custom assembly routines for encryption.  However, it may be
@@ -35,16 +35,15 @@ its control flow or cache access patterns would be a difficult feat! For this
 reason, most timing-critical routines are written in assembly language,
 guaranteeing that they appear verbatim in the generated executable.
 
-Hand-coding assembly is costly in terms of developer time,
-especially for less commonly used architectures, so writing a single
-implementation in a high-level language which works cross-platform would be
-beneficial. However, it requires careful auditing of both the source code and
-generated assembly, along with some clever tricks to ensure that your carefully
-designed, timing-attack resistant library is not optimized into a
-vulnerable state when actually used. At the moment, this library does not take
-any of these measures, and *should not be used* except perhaps as an intelligible
-reference for assembly implementations. Before it can be used as is, I must do
-the following:
+Hand-coding assembly is costly in terms of developer time, especially for less
+common architectures, so writing a single implementation in a high-level
+language which works cross-platform would be beneficial. However, it requires
+careful auditing of both the source code and generated assembly, along with
+some clever tricks to ensure that your carefully designed, timing-attack
+resistant library is not optimized into a vulnerable state when actually used.
+At the moment, this library does not take any of these measures, and *should
+not be used* except perhaps as an intelligible reference for assembly
+implementations. Before it can be used as is, I must do the following:
 
 - [ ] Pessimize the local optimizer using intrinsics like `test::black_box`.
 - [ ] Put timing critical code behind an FFI barrier to make it opaque to
@@ -71,7 +70,7 @@ S-box][], which requires us to perform inversion in GF(2⁸).
 This is computationally difficult, so practical implementations use a lookup
 table. Since this lookup table is only 256 bytes (4 cache lines) large, it is
 [likely resistant to cache-timing attacks][t-table]. However, we must still
-perform multiplication in GF(2^8) during `MixColumns`. Fast software
+perform multiplication in GF(2⁸).) during `MixColumns`. Fast software
 implementations use a combined lookup table for both steps, meaning all
 computations in finite field are performed ahead of time. We would like
 something that is more performant than the naive AES implementation, but
